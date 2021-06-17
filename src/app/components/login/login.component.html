@@ -1,0 +1,20 @@
+<div class="body">
+    <mat-spinner *ngIf="loggedIn"></mat-spinner>
+    <div class="login" *ngIf="!loggedIn">
+        <form [formGroup]="form" (ngSubmit)="login()">
+            <img src="assets/img/019-user.png" alt="user" class="login-avatar">
+            <p>Bienvenido!</p>
+            <mat-form-field class="login-input" appearance="fill">
+                <mat-label>Usuario</mat-label>
+                <input type="text" matInput formControlName="username">
+            </mat-form-field>
+            <mat-form-field class="login-input" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password">
+            </mat-form-field>
+            <div class="buttons">
+                <button type="submit" class="login-button" color="primary">Ingresar</button>
+            </div>
+        </form>
+    </div>
+</div>
