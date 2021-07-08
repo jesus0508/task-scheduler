@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   loggedIn: boolean;
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.loggedIn = false;
     this.form = this.fb.group({
       username: ['', Validators.required],
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       this.fakeLoading();
       this.form.reset();
     } else {
-      this._snackBar.open("Credenciales incorrectas", '', {
+      this.snackBar.open("Credenciales incorrectas", '', {
         duration: 2000,
         horizontalPosition: 'end',
         verticalPosition: 'bottom',

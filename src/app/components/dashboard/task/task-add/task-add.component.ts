@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { TaskService } from 'src/app/services/task.service';
+import { JobDetailInfoDTO } from 'src/app/interfaces/JobDetailInfoDTO';
+import { JobDetailInfoService } from 'src/app/services/jobDetailInfo/job-detail-info.service';
+
 
 @Component({
   selector: 'app-task-add',
@@ -11,22 +12,18 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class TaskAddComponent implements OnInit {
 
-  form: FormGroup;
+  selectedValue: number;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private taskService: TaskService, private router: Router) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      group: ['', Validators.required],
-      description: ['', ''],
-      cronExpression: ['', Validators.required]
-    });
+  constructor(private snackBar: MatSnackBar, private jobDetailInfoService: JobDetailInfoService, private router: Router) {
+    this.selectedValue = 0;
   }
 
   ngOnInit(): void {
+
   }
 
-  create(): void {
-    this.taskService.add(this.form.value).subscribe(result => {
+  create(jobDetailInfoDTO: JobDetailInfoDTO): void {
+    this.jobDetailInfoService.add(jobDetailInfoDTO).subscribe(result => {
       this.snackBar.open("Tarea registrada con exito", '', {
         duration: 2000,
         horizontalPosition: 'end',
@@ -36,4 +33,11 @@ export class TaskAddComponent implements OnInit {
     });
   }
 
+  isBatchJob(): boolean {
+    return this.selectedValue == 2;
+  }
+
+  cancel() {
+    this.router.navigate(['/dashboard']);
+  }
 }

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators'
-import { Task } from '../interfaces/Task';
-import { TaskAction } from '../interfaces/TaskAction';
+import { Task } from 'src/app/interfaces/Task';
 
 const TASKS_URL = 'http://localhost:9191/tasks'
 
@@ -36,14 +35,7 @@ export class TaskService {
       );
   }
 
-  updateState(taskAction: TaskAction): Observable<Task> {
-    return this.httpCliente.put<Task>(`${TASKS_URL}/${taskAction.id}`, taskAction)
-      .pipe(
-        catchError(this.errorHandler)
-      );
-  }
-
-  delete(id: number): Observable<void>{
+  delete(id: number): Observable<void> {
     return this.httpCliente.delete<void>(`${TASKS_URL}/${id}`)
       .pipe(
         catchError(this.errorHandler)

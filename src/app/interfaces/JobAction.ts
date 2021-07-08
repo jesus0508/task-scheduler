@@ -1,4 +1,4 @@
-export interface TaskAction{
+export interface JobAction {
     id: number,
     action: number
 }

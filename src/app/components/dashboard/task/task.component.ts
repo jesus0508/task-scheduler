@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/interfaces/Task'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TaskService } from 'src/app/services/task.service';
+import { JobDetailInfoService } from 'src/app/services/jobDetailInfo/job-detail-info.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { JobDetailInfo } from 'src/app/interfaces/JobDetailInfo';
 
 @Component({
   selector: 'app-task',
@@ -14,13 +14,13 @@ import { MatSort } from '@angular/material/sort';
 })
 export class TaskComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'group', 'cronExpression', 'state', 'actions'];
-  dataSource!: MatTableDataSource<Task>;
+  displayedColumns: string[] = ['id', 'name', 'state', 'cronExpression', 'previousFireTime', 'nextFireTime', 'group', 'actions'];
+  dataSource!: MatTableDataSource<JobDetailInfo>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private taskService: TaskService, private snackBar: MatSnackBar) {
+  constructor(private jobDetailService: JobDetailInfoService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -28,8 +28,7 @@ export class TaskComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+
   }
 
   applyFilter(event: Event): void {
@@ -41,8 +40,8 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  deleteTask(id: number): void {
-    this.taskService.delete(id).subscribe(result => {
+  deleteJob(id: number): void {
+    this.jobDetailService.delete(id).subscribe(result => {
       this.snackBar.open('Tarea eliminada con éxito!', '', {
         duration: 1000,
         horizontalPosition: 'center',
@@ -52,19 +51,31 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  updateJob(id: number): void {
+    
+  }
+
   updateTaskState(id: number, action: number): void {
-    this.taskService.updateState({ id, action }).subscribe(result => {
+    this.jobDetailService.updateState(id, action).subscribe(result => {
       this.loadTasks();
     });
   }
 
   private loadTasks(): void {
-    this.taskService.getAll()
+    this.jobDetailService.getAll()
       .subscribe(result => {
+        console.log(result);
         this.dataSource = new MatTableDataSource(result)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
   }
 
+  isPaused(state: string): boolean {
+    return state == 'PAUSED';
+  }
+
+  isNormal(state: string): boolean {
+    return state == 'NORMAL';
+  }
 }

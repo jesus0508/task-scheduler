@@ -1,5 +1,39 @@
-table {
+.dasboard_header{
+    background: #fff;
+    padding: 0;
+    margin-bottom: 24px;
+    box-shadow: 0 3px 11px 0 #e8eafc, 0 3px 3px -2px hsl(0deg 0% 70% / 10%), 0 1px 8px 0 hsl(0deg 0% 60% / 10%);
+}
+
+.dasboard_body{
+    background: #fff;
+    padding: 16px;
+    box-shadow: 0 3px 11px 0 #e8eafc, 0 3px 3px -2px hsl(0deg 0% 70% / 10%), 0 1px 8px 0 hsl(0deg 0% 60% / 10%);
+}
+
+.dasboard_header__toolbar{
+    background: none;
+}
+
+.table_header {
+    display: flex;
+    justify-content: space-between;
+    flex-basis: auto;
+}
+
+.table_header__options {
+    padding: 4px;
+}
+
+.table{
     width: 100%;
+    overflow-x: auto;
+}
+
+table{
+    width: 100%;
+    overflow-x: auto;
+
 }
 
 .mat-form-field {
@@ -19,3 +53,4 @@ h2 {
 .example-spacer {
     flex: 1 1 auto;
 }
+

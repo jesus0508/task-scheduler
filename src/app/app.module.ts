@@ -10,11 +10,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './components/shared/material/material.module';
 
 import { LoginComponent } from './components/login/login.component';
+import { DatesPipe } from './pipes/dates.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    DatesPipe,
   ],
   imports: [
     BrowserModule,

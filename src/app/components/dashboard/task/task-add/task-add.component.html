@@ -1,44 +1,5 @@
-<form class="main" [formGroup]="form" (ngSubmit)="create()">
-    <mat-card class="card">
-        <div class="card-header">
-            <h2>Crear Tarea</h2>
-        </div>
-        <mat-card-content>
-            <div class="form">
-                <div class="row">
-                    <mat-form-field class="medium-width">
-                        <mat-label>Nombre </mat-label>
-                        <input matInput formControlName="name" required>
-                    </mat-form-field>
-
-                    <mat-form-field class="medium-width">
-                        <mat-label>Grupo </mat-label>
-                        <mat-select formControlName="group" required>
-                            <mat-option>-- None --</mat-option>
-                            <mat-option value="TEST">TEST</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <mat-form-field class="full-width">
-                        <mat-label>Descripcion </mat-label>
-                        <textarea matInput placeholder="Ex. Esto es una descripción"
-                            formControlName="description"></textarea>
-                    </mat-form-field>
-                </div>
-
-                <div class="row">
-                    <mat-form-field class="full-width">
-                        <mat-label>Cron Expression </mat-label>
-                        <input matInput placeholder="0 */12 * * *" formControlName="cronExpression" required>
-                    </mat-form-field>
-                </div>
-
-            </div>
-        </mat-card-content>
-        <mat-card-actions class="form-actions">
-            <button type="submit" mat-button [disabled]="form.invalid">Guardar</button>
-            <button mat-button routerLink="/dashboard">Cancelar</button>
-        </mat-card-actions>
-    </mat-card>
-</form>
+<app-task-form
+    title="Crear"
+    (onSubmit)="create($event)"
+    (onCancel)="cancel()"
+></app-task-form>

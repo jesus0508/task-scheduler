@@ -2,11 +2,9 @@
     <button mat-icon-button aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>AppTaskScheduler</span>
+    <span>TaskSchedulerApp</span>
     <span class="example-spacer"></span>
-    <button mat-flat-button color="primary">Tasks</button>
-    <span class="example-spacer"></span>
-    <button mat-icon-button aria-label="Example icon-logout with share icon">
+    <button (click) = "logout()" mat-icon-button aria-label="Example icon-logout with share icon">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>
