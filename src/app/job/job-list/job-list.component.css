@@ -1,0 +1,33 @@
+.table_header {
+    display        : flex;
+    justify-content: space-between;
+    flex-basis     : auto;
+}
+
+.table_header__options {
+    padding: 4px;
+}
+
+.table {
+    width     : 100%;
+    overflow-x: auto;
+}
+
+table {
+    width     : 100%;
+    overflow-x: auto;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width    : 100%;
+}
+
+.header {
+    display: flex;
+}
+
+h2 {
+    margin : 0px;
+    display: inline-block;
+}

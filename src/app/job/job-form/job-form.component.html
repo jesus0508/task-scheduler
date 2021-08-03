@@ -1,0 +1,125 @@
+<form [formGroup]="jobForm" class="container dasboard_body" fxLayout="column" fxLayoutAlign="center none">
+    <mat-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="jobDetailInfo">
+            <ng-template matStepLabel>Programar tarea</ng-template>
+            <div class="main">
+                <mat-card class="card">
+                    <mat-card-title class="card-header">
+                        <p>Programar tarea</p>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="form" formGroupName="jobDetailInfo">
+                            <div class="row">
+                                <mat-form-field class="medium-width">
+                                    <mat-label>Tarea </mat-label>
+                                    <mat-select (selectionChange)="createJobSettingForm($event)"
+                                        formControlName="taskId" required>
+                                        <mat-option>-- None --</mat-option>
+                                        <mat-option *ngFor="let task of tasks" [value]="task.id">{{task.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field class="medium-width">
+                                    <mat-label>Grupo </mat-label>
+                                    <mat-select formControlName="groupId" required>
+                                        <mat-option>-- None --</mat-option>
+                                        <mat-option *ngFor="let jobGroup of jobGroups" [value]="jobGroup.id">
+                                            {{jobGroup.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="row">
+                                <mat-form-field class="medium-width">
+                                    <mat-label>Nombre </mat-label>
+                                    <input matInput formControlName="name" required>
+                                </mat-form-field>
+                                <mat-form-field class="medium-width">
+                                    <mat-label>Cron Expression </mat-label>
+                                    <input matInput placeholder="0 */12 * * *" formControlName="cronExpression"
+                                        required>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="row">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Descripción </mat-label>
+                                    <textarea matInput placeholder="Ex. Esto es una descripción"
+                                        formControlName="description"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions class="form-actions">
+                        <button mat-button routerLink="/tasks">Cancelar</button>
+                        <button mat-button [disabled]="jobDetailInfo.invalid"
+                            matStepperNext>Siguiente</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </mat-step>
+
+        <mat-step [stepControl]="jobSetting">
+            <ng-template matStepLabel>Configuraciones adicionales</ng-template>
+            <div class="main" formGroupName="jobSetting">
+                <mat-card class="card">
+                    <mat-card-title class="card-header">
+                        <p>Configuraciones adicionales</p>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div class="form">
+                            <div class="row">
+                                <mat-form-field class="medium-width">
+                                    <mat-label>Metodo </mat-label>
+                                    <mat-select formControlName="httpMethod" required>
+                                        <mat-option>-- None --</mat-option>
+                                        <mat-option *ngFor="let httpMethod of httpMethods" [value]="httpMethod">
+                                            {{httpMethod}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="medium-width">
+                                    <mat-label>URL </mat-label>
+                                    <input matInput formControlName="url" placeholder="https://localhost:8181/client-api/v2/example" required>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="row">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Headers </mat-label>
+                                    <textarea matInput placeholder="{'key' : 'value'}"
+                                        formControlName="httpHeaders"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="row">
+                                <mat-form-field class="full-width">
+                                    <mat-label>Body </mat-label>
+                                    <textarea matInput placeholder="{'key' : 'value'}"
+                                        formControlName="httpBody"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions class="form-actions">
+                        <button mat-button matStepperPrevious>Regresar</button>
+                        <button mat-button [disabled]="jobSetting.invalid"
+                            matStepperNext>Siguiente</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Confirmación</ng-template>
+            <p>Da clic para confirmar.</p>
+            <div>
+                <button mat-button matStepperPrevious>Regresar</button>
+                <button type="button" (click)="submit()" mat-button>Confirmar</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</form>

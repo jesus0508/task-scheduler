@@ -1,0 +1,16 @@
+<mat-toolbar class="navbar" color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="toggleSidenav.emit()" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
+            <h1>
+                TaskSchedulerApp
+            </h1>
+        </a>
+        <span class="example-spacer"></span>
+        <button (click)="logout()" mat-icon-button aria-label="Example icon-logout with share icon">
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
