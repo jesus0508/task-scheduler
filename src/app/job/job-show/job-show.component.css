@@ -1,0 +1,17 @@
+.table {
+    width     : 100%;
+    overflow-x: auto;
+}
+
+table {
+    width     : 100%;
+    overflow-x: auto;
+}
+
+.mat-column-completedAt {
+    flex: 0 0 20%;
+}
+
+.mat-column-firedAt {
+    flex: 0 0 20%;
+}

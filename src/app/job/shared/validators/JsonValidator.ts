@@ -1,10 +1,11 @@
 import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export class JsonValidator {
-    static isJson(control: AbstractControl) : ValidationErrors | null{
+    static isJson(control: AbstractControl): ValidationErrors | null {
         const error: ValidationErrors = { jsonInvalid: true };
+        const value = control.value?.trim().length > 0 ? control.value : null;
         try {
-            JSON.parse(control.value);
+            JSON.parse(value);
         } catch (e) {
             control.setErrors(error);
             return error;

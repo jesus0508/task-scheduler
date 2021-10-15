@@ -10,13 +10,13 @@
 
             <mat-nav-list>
                 <h3 mat-subheader>Home</h3>
-
+                <!-- 
                 <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
                     <mat-icon mat-list-icon>
                         dashboard
                     </mat-icon>
                     <p mat-line> Dashboard </p>
-                </a>
+                </a> -->
 
                 <a mat-list-item [routerLink]="['/tasks']" routerLinkActive="active">
                     <mat-icon mat-list-icon>
@@ -24,14 +24,14 @@
                     </mat-icon>
                     <p mat-line> Tareas </p>
                 </a>
-                <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
+                <!-- <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
                     <mat-icon mat-list-icon>
                         people
                     </mat-icon>
                     <p mat-line> Usuarios </p>
-                </a>
+                </a> -->
 
-                <a mat-list-item [routerLink]="['/account/profile']" routerLinkActive="active">
+                <a mat-list-item [routerLink]="['/account', username]" routerLinkActive="active">
                     <mat-icon mat-list-icon>person</mat-icon>
                     <p mat-line> Cuenta </p>
                 </a>
@@ -40,7 +40,7 @@
 
                 <h3 mat-subheader>Recursos</h3>
 
-                <a mat-list-item href="http://localhost:9191/swagger-ui.html" target="_blank">
+                <a mat-list-item href="{{docUrl}}" target="_blank">
                     <mat-icon mat-list-icon>
                         api
                     </mat-icon>
@@ -73,13 +73,12 @@
 
         <!-- Main content -->
         <mat-sidenav-content class="sidenav-content">
-            <!-- 
+
             <div class="progress-bar-container">
-                <mat-progress-bar color="accent" mode="indeterminate" *ngIf="spinnerService.visibility | async">
+                <mat-progress-bar color="accent" mode="indeterminate"
+                    *ngIf="progressIndicatorService.isLoading() | async">
                 </mat-progress-bar>
-                <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> 
             </div>
-        -->
 
             <div class="container" fxLayout="row" fxLayoutAlign="center none">
                 <div fxFlex="95%">

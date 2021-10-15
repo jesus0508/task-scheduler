@@ -1,20 +1,31 @@
 <div class="body">
-    <mat-spinner *ngIf="loggedIn"></mat-spinner>
-    <div class="login" *ngIf="!loggedIn">
+    <mat-spinner class="spinner" [diameter]="50" *ngIf="loading"></mat-spinner>
+    <div class="login" *ngIf="!loading">
         <form [formGroup]="form" (ngSubmit)="login()">
             <img src="assets/img/019-user.png" alt="user" class="login-avatar">
             <p>Bienvenido!</p>
-            <mat-form-field class="login-input" appearance="fill">
+            <mat-form-field class="login-input" appearance="outline">
                 <mat-label>Usuario</mat-label>
                 <input type="text" matInput formControlName="username">
+                <mat-error *ngIf="form.controls['username'].hasError('required')">
+                    El username es requerido
+                </mat-error>
             </mat-form-field>
-            <mat-form-field class="login-input" appearance="fill">
+            <mat-form-field class="login-input" appearance="outline">
                 <mat-label>Password</mat-label>
-                <input type="password" matInput formControlName="password">
+                <input [type]="hide ? 'password' : 'text'" matInput formControlName="password">
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['password'].hasError('required')">
+                    El password es requerido
+                </mat-error>
             </mat-form-field>
             <div class="buttons">
-                <button type="submit" class="login-button" color="primary">Ingresar</button>
+                <button [disabled]="form.invalid" type="submit" class="login-button" color="primary">Ingresar</button>
             </div>
         </form>
     </div>
+
 </div>

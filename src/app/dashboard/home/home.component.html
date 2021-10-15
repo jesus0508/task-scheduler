@@ -1,14 +1,22 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center none">
-  <div fxFlex="95%">
-    <div class="container" fxLayout="row" fxLayoutAlign="center none">
-      <h2>Bienvenido!</h2>
+<app-breadcrumb title="Home"></app-breadcrumb>
+<div class="container dasboard_body" fxLayout="column" fxLayoutAlign="center none">
+
+  <div fxLayout="row">
+    <!-- <div class="chart">
+      <app-visits-chart [visitsChartData]="visitsChartData$ | async"></app-visits-chart>
     </div>
-    <div class="container" fxLayout="row" fxLayoutAlign="center none">
-      <div fxFlex="50%" class="text-center no-records animate">
-        <mat-icon>dashboard</mat-icon>
-        <p>Este es el dashboard.</p>
-      </div>
-      <mat-icon> </mat-icon>
+    <div class="chart">
+      <app-performance-chart [performanceChartData]="performanceChartData$ | async"></app-performance-chart>
     </div>
+    <div class="chart">
+      <app-revenue-chart [revenueCharData]="revenueChartData$ | async"></app-revenue-chart>
+    </div> -->
   </div>
+
+  <!-- <app-daily-line-chart [dailyLineChartData]="dailyLineChartData$ | async"></app-daily-line-chart> -->
+
+  <!-- <app-project-stat-chart [projectsStatsData]="projectsStatsData$ | async"></app-project-stat-chart>
+
+  <app-support-requests [supportRequestData]="supportRequestData$ | async"></app-support-requests>  -->
+
 </div>

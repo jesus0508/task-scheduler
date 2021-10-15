@@ -1,0 +1,82 @@
+<app-breadcrumb title="Cuenta de Usuario"></app-breadcrumb>
+<div class="container dasboard_body" fxLayout="column" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <form fxFlex.gt-sm="70" fxFlex.lt-md="100" class="text-center" [formGroup]="userForm"
+            (ngSubmit)="updateUserProfile()">
+            <mat-card>
+                <mat-card-title>
+                    <p>Datos de usuario</p>
+                </mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="column" fxLayoutGap="1rem">
+                        <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Apellido Paterno </mat-label>
+                                <input matInput formControlName="firstSurname" required>
+                                <mat-error *ngIf="userForm.get('firstSurname')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('firstSurname')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Apellido Materno </mat-label>
+                                <input matInput formControlName="lastSurname" required>
+                                <mat-error *ngIf="userForm.get('lastSurname')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('lastSurname')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="columns">
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Nombres </mat-label>
+                                <input matInput formControlName="names" required>
+                                <mat-error *ngIf="userForm.get('names')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('names')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Nombre de usuario </mat-label>
+                                <input matInput formControlName="username" required>
+                                <mat-error *ngIf="userForm.get('username')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('username')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Email </mat-label>
+                                <input matInput formControlName="email" required placeholder="Ex. pat@example.com">
+                                <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+                                    Ingrese un email valido.
+                                </mat-error>
+                                <mat-error *ngIf="userForm.get('email')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button routerLink="/tasks">Cancelar</button>
+                    <button mat-button type="submit" [disabled]="userForm.invalid">Guardar</button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</div>

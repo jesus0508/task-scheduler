@@ -10,13 +10,11 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
 import { LoginComponent } from './login/login.component';
-import { DatesPipe } from './shared/pipes/dates.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DatesPipe,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +22,7 @@ import { DatesPipe } from './shared/pipes/dates.pipe';
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

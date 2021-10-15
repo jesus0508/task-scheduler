@@ -1,0 +1,46 @@
+<form [formGroup]="jobForm" class="container dasboard_body">
+    <mat-stepper [linear]="true" #stepper [orientation]="(stepperOrientation | async)!">
+        <mat-step [stepControl]="jobDetailForm">
+            <ng-template matStepLabel>
+                <div class="text-center">
+                    <mat-icon>date_range</mat-icon><br /><span>Programar tarea</span>
+                </div>
+            </ng-template>
+            <app-job-detail-form [groups]="groups" [tasks]="tasks" 
+                (onChangeNotification)="enableNotification($event)" 
+                (onChangeHttpRequest)="enableHttpRequest($event)"></app-job-detail-form>
+        </mat-step>
+
+        <mat-step [stepControl]="httpRequestConfigForm" [optional]="!enableHttpRequestConfig">
+            <ng-template matStepLabel>
+                <div class="text-center">
+                    <mat-icon>http</mat-icon><br /><span>Petición HTTP</span>
+                </div>
+            </ng-template>
+            <app-http-request-config-form></app-http-request-config-form>
+        </mat-step>
+
+        <mat-step [stepControl]="notificationConfigForm" [optional]="!enableNotificationConfig">
+            <ng-template matStepLabel>
+                <div class="text-center">
+                    <mat-icon>notifications</mat-icon><br /><span>Notificación</span>
+                </div>
+            </ng-template>
+            <app-notification-config-form (onPrevSubmit)="createJobDetailRequestPreview()"></app-notification-config-form>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>
+                <div class="text-center">
+                    <mat-icon>grading</mat-icon><br /><span>Confirmación</span>
+                </div>
+            </ng-template>
+            <p>Antes de confirmar, verifica que todos los datos sean correctos.</p>
+            <pre>{{jobDetailRequest | json}}</pre>
+            <div>
+                <button mat-button matStepperPrevious>Regresar</button>
+                <button type="button" (click)="submit()" mat-button>Confirmar</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</form>

@@ -1,0 +1,205 @@
+<app-breadcrumb title="Detalles de la tarea"></app-breadcrumb>
+
+<mat-tab-group mat-align-tabs="center" class="container dasboard_body">
+    <mat-tab label="Información de la tarea">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex.gt-sm="100" fxFlex.lt-md="100" class="text-center">
+                <mat-card>
+                    <mat-card-title>
+                        <p>Informacion de la tarea</p>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div fxLayout="column" fxLayoutGap="1rem">
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Nombre </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto && jobDetailDto.task.name" readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Clase Java </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto && jobDetailDto.task.jobClass" readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Grupo </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto && jobDetailDto.group.name" readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Nombre </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto && jobDetailDto.name" readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Hora de Creacion </mat-label>
+                                    <input matInput
+                                        [ngModel]="(jobDetailDto && jobDetailDto.cronTriggers[0].startTime) | date: 'dd/MM/yyyy HH:mm:ss'"
+                                        readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Cron Expression </mat-label>
+                                    <input matInput
+                                        [ngModel]="jobDetailDto && jobDetailDto.cronTriggers[0].cronExpression"
+                                        readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Estado </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto && jobDetailDto.cronTriggers[0].state"
+                                        readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Ejecución previa </mat-label>
+                                    <input matInput
+                                        [ngModel]="(jobDetailDto && jobDetailDto.cronTriggers[0].previousFireTime) | date: 'dd/MM/yyyy HH:mm:ss'"
+                                        readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex appearance="outline">
+                                    <mat-label>Proxima Ejecución </mat-label>
+                                    <input matInput
+                                        [ngModel]="(jobDetailDto && jobDetailDto.cronTriggers[0].nextFireTime) | date: 'dd/MM/yyyy HH:mm:ss'"
+                                        readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Descripción </mat-label>
+                                <textarea matInput [ngModel]="jobDetailDto && jobDetailDto.description"
+                                    readonly></textarea>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Historial de ejecución">
+        <div class="table" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+                </ng-container>
+
+                <!-- State Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Estado </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon *ngIf="element.status === 0" color="accent">warning</mat-icon>
+                        <mat-icon *ngIf="element.status === 1" color="warn">error</mat-icon>
+                        <mat-icon *ngIf="element.status === 2" color="primary">check_circle</mat-icon>
+                    </td>
+                </ng-container>
+
+                <!-- FiredAt Column -->
+                <ng-container matColumnDef="firedAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de ejecucion </th>
+                    <td mat-cell *matCellDef="let element"> {{element.firedAt | date: 'dd/MM/yy HH:mm:ss'}} </td>
+                </ng-container>
+
+                <!-- CompletedAt Column -->
+                <ng-container matColumnDef="completedAt">
+                    <th mat-header-cell *matHeaderCellDef> Fecha de finalizacion </th>
+                    <td mat-cell *matCellDef="let element"> {{element.completedAt | date: 'dd/MM/yy HH:mm:ss'}} </td>
+                </ng-container>
+
+                <!-- Detail Column -->
+                <ng-container matColumnDef="result">
+                    <th mat-header-cell *matHeaderCellDef> Detalles </th>
+                    <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr *matNoDataRow><td>Sin resultados</td></tr>
+            </table>
+            <mat-paginator [length]="resultsLength" [pageSize]="20"
+                aria-label="Seleccione la página de resultados de busqueda">
+            </mat-paginator>
+        </div>
+    </mat-tab>
+    <mat-tab *ngIf="jobDetailDto && jobDetailDto.httpRequestConfig" label="Peticion Http">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex.gt-sm="100" fxFlex.lt-md="100" class="text-center">
+                <mat-card>
+                    <mat-card-title>
+                        <p>Configuraciones adicionales</p>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div fxLayout="column" fxLayoutGap="1rem">
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex="25" appearance="outline">
+                                    <mat-label>Metodo </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto.httpRequestConfig.httpMethod" readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex="75" class="medium-width" appearance="outline">
+                                    <mat-label>URL </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto.httpRequestConfig.url" readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Headers </mat-label>
+                                <textarea matInput [ngModel]="(jobDetailDto.httpRequestConfig.httpHeaders) | json"
+                                    readonly></textarea>
+
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Body </mat-label>
+                                <textarea matInput [ngModel]="(jobDetailDto.httpRequestConfig.httpBody) | json"
+                                    readonly></textarea>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions class="form-actions">
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab *ngIf="jobDetailDto && jobDetailDto.notificationConfig" label="Notificaciones">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex.gt-sm="100" fxFlex.lt-md="100" class="text-center">
+                <mat-card>
+                    <mat-card-title>
+                        <p>Configuraciones de notificación</p>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div fxLayout="column" fxLayoutGap="1rem">
+                            <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                                <mat-form-field fxFlex="25" appearance="outline">
+                                    <mat-label>Límite de ejecución </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto.notificationConfig.executionLimit" readonly>
+                                </mat-form-field>
+                                <mat-form-field fxFlex="75" appearance="outline">
+                                    <mat-label>To </mat-label>
+                                    <input matInput [ngModel]="jobDetailDto.notificationConfig.mainRecipients" readonly>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>CC </mat-label>
+                                <textarea matInput [ngModel]="jobDetailDto.notificationConfig.secondaryRecipients"
+                                    readonly></textarea>
+
+                            </mat-form-field>
+
+                        </div>
+                    </mat-card-content>
+
+                </mat-card>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

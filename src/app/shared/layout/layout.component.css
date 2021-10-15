@@ -51,3 +51,7 @@ a.mat-list-item.active {
   position: absolute;
   bottom  : 0;
 }
+
+.spinner {
+  margin: 0 auto;
+}

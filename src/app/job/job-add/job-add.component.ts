@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { JobDetailInfoRequest } from '../shared/interfaces/JobDetailInfoRequest';
-import { JobDetailInfoService } from '../shared/services/jobDetailInfo/job-detail-info.service';
+import { JobDetailRequest } from '../shared/interfaces/JobDetailRequest';
+import { JobDetailService } from '../shared/services/jobDetail/job-detail.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class JobAddComponent implements OnInit {
 
   selectedValue: number;
 
-  constructor(private snackBar: MatSnackBar, private jobDetailInfoService: JobDetailInfoService, private router: Router) {
+  constructor(private snackBar: MatSnackBar, private jobDetailService: JobDetailService, private router: Router) {
     this.selectedValue = 0;
   }
 
@@ -22,8 +22,8 @@ export class JobAddComponent implements OnInit {
 
   }
 
-  create(jobDetailInfoRequest: JobDetailInfoRequest): void {
-    this.jobDetailInfoService.add(jobDetailInfoRequest).subscribe(result => {
+  create(jobDetailRequest: JobDetailRequest): void {
+    this.jobDetailService.add(jobDetailRequest).subscribe(result => {
       this.router.navigate(['tasks']);
       this.snackBar.open("Tarea registrada con exito", '', {
         duration: 2000,

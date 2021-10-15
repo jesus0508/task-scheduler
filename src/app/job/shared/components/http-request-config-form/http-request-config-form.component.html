@@ -1,0 +1,55 @@
+<div fxLayout="row" fxLayoutAlign="center center" [formGroup]="httpRequestConfigForm">
+    <div fxFlex.gt-sm="70" fxFlex.lt-md="100" class="text-center">
+        <mat-card>
+            <mat-card-title>
+                <p>Configuración de la petición HTTP</p>
+            </mat-card-title>
+            <mat-card-content>
+                <div fxLayout="column" fxLayoutGap="1rem">
+                    <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                        <mat-form-field fxFlex="25" appearance="outline">
+                            <mat-label>Metodo</mat-label>
+                            <mat-select formControlName="httpMethod" [required]="required">
+                                <mat-option>-- None --</mat-option>
+                                <mat-option *ngFor="let httpMethod of httpMethods" [value]="httpMethod">
+                                    {{httpMethod}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="httpRequestConfigForm.get('httpMethod')?.hasError('required')">
+                                Seleccione un metodo.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="75" class="medium-width" appearance="outline">
+                            <mat-label>URL</mat-label>
+                            <input matInput formControlName="url"
+                                placeholder="https://localhost:8181/client-api/v2/example" [required]="required">
+                            <mat-error *ngIf="httpRequestConfigForm.get('url')?.hasError('required')">
+                                Ingrese una url.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Headers </mat-label>
+                        <textarea matInput placeholder="{'key' : 'value'}" formControlName="httpHeaders"></textarea>
+                        <mat-error *ngIf="httpRequestConfigForm.get('httpHeaders')?.hasError('maxLength')">
+                            El campo debe contener menos de 200 caracteres.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Body </mat-label>
+                        <textarea matInput placeholder="{'key' : 'value'}" formControlName="httpBody"></textarea>
+                        <mat-error *ngIf="httpRequestConfigForm.get('httpBody')?.hasError('maxLength')">
+                            El campo debe contener menos de 200 caracteres.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="form-actions">
+                <button mat-button matStepperPrevious>Regresar</button>
+                <button mat-button [disabled]="httpRequestConfigForm.invalid && required"
+                    matStepperNext>Siguiente</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptorService } from './interceptors/error-interceptor.service';
-
+import { JWTInterceptor } from './interceptors/jwt/jwt.interceptor';
+import { ErrorInterceptor } from './interceptors/error/error.interceptor';
+import { SpinnerInterceptor } from './interceptors/spinner/spinner.interceptor';
 
 
 @NgModule({
@@ -13,9 +14,19 @@ import { ErrorInterceptorService } from './interceptors/error-interceptor.servic
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptorService,
+      useClass: SpinnerInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ]
 })
 export class CoreModule { }

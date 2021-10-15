@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../../interfaces/Task';
 
-const TASKS_URL = 'http://localhost:9191/tasks'
+import { environment } from 'src/environments/environment';
+
+const TASKS_URL = environment.apiUrl + '/tasks'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,6 @@ export class TaskService {
   }
 
   add(task: Task): Observable<Task> {
-    console.log(task);
     return this.httpCliente.post<Task>(`${TASKS_URL}`, task);
   }
 

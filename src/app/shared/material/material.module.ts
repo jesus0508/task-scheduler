@@ -20,6 +20,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [],
@@ -44,6 +48,10 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatSidenavModule,
     MatListModule,
     MatStepperModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatMenuModule
   ],
   exports: [
     MatSliderModule,
@@ -65,6 +73,10 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatSidenavModule,
     MatListModule,
     MatStepperModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule { }

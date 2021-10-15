@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, skip } from 'rxjs/operators';
+import { AuthService } from '../core/services/auth/auth.service';
+import { ProgressIndicatorService } from '../shared/services/progress-indicator/progress-indicator.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
-  loggedIn: boolean;
+  loading: boolean = false;
+  isLoading!: Subscription;
+  hide: boolean = true;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
-    this.loggedIn = false;
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router, private authService: AuthService, public progressIndicatorService: ProgressIndicatorService) {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['username', [Validators.required, Validators.maxLength(50)]],
+      password: ['password', [Validators.required, Validators.maxLength(50)]]
     });
+    this.isLoading = this.progressIndicatorService.isLoading$
+      .pipe(skip(1)) // F T F
+      .subscribe(loading => {
+        this.loading = loading;
+      });
   }
 
   ngOnInit(): void {
@@ -26,24 +37,25 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     const { username, password } = this.form.value;
-    if (username == "admin" && password == "admin") {
-      this.fakeLoading();
-      this.form.reset();
-    } else {
-      this.snackBar.open("Credenciales incorrectas", '', {
-        duration: 2000,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
+    this.authService.login(username, password)
+      .pipe(catchError(error => this.handleError(error)))
+      .subscribe(user => {
+        this.router.navigate(['tasks']);
       });
-    }
   }
 
-  fakeLoading(): void {
-    this.loggedIn = true;
-    setTimeout(() => {
-      this.router.navigate([
-        'dashboard'
-      ]);
-    }, 1500);
+  private handleError(error: HttpErrorResponse) {
+    this.snackBar.open("Usuario no existe!", '', {
+      duration: 2000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
+    return throwError("User dosen't exist!");
   }
+
+  ngOnDestroy(): void {
+    this.isLoading.unsubscribe();
+  }
+
 }
+

@@ -1,0 +1,58 @@
+<div fxLayout="row" fxLayoutAlign="center center" [formGroup]="notificationConfigForm">
+    <div fxFlex.gt-sm="70" fxFlex.lt-md="100" class="text-center">
+        <ng-template matStepLabel>Notificaciones</ng-template>
+        <mat-card>
+            <mat-card-title>
+                <p>Configuración de Notificaciones</p>
+            </mat-card-title>
+            <mat-card-content>
+                <div fxLayout="column" fxLayoutGap="1rem">
+
+                    <div fxLayout="column" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                        <mat-form-field  appearance="outline">
+                            <mat-label>Limite de ejecución</mat-label>
+                            <input matInput formControlName="executionLimit" [required]="required">
+                            <mat-error *ngIf="notificationConfigForm.get('executionLimit')?.hasError('required')">
+                                Este campo no puede ser vacio.
+                            </mat-error>
+                            <mat-error *ngIf="notificationConfigForm.get('executionLimit')?.hasError('min')">
+                                El limite debe ser mayor a 0.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>To</mat-label>
+                            <input matInput formControlName="mainRecipients" placeholder="Ex. pat@example.com" [required]="required">
+                            <mat-error *ngIf="notificationConfigForm.get('mainRecipients')?.hasError('required')">
+                                Este campo no puede ser vacio.
+                            </mat-error>
+                            <mat-error *ngIf="notificationConfigForm.get('mainRecipients')?.hasError('maxLength')">
+                                La longitud maxima es de 50 caracteres.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>CC</mat-label>
+                            <input matInput formControlName="secondaryRecipients" placeholder="Ex. pat@example.com" [required]="required">
+                            <mat-error *ngIf="notificationConfigForm.get('secondaryRecipients')?.hasError('required')">
+                                Este campo no puede ser vacio.
+                            </mat-error>
+                            <mat-error *ngIf="notificationConfigForm.get('secondaryRecipients')?.hasError('maxLength')">
+                                La longitud maxima es de 50 caracteres.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </mat-card-content>
+            <mat-card-actions class="form-actions">
+                <button mat-button matStepperPrevious>Regresar</button>
+                <button mat-button [disabled]="notificationConfigForm.invalid && required" (click)="createJobDetailRequestPreview()" matStepperNext>Siguiente</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

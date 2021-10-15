@@ -1,0 +1,72 @@
+<div fxLayout="row" fxLayoutAlign="center center" [formGroup]="jobDetailForm">
+    <div fxFlex.gt-sm="70" fxFlex.lt-md="100" class="text-center">
+        <mat-card>
+            <mat-card-title>
+                <p>Programar tarea</p>
+            </mat-card-title>
+            <mat-card-content>
+                <div fxLayout="column" fxLayoutGap="1rem">
+                    <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                        <mat-form-field fxFlex appearance="outline">
+                            <mat-label>Tarea</mat-label>
+                            <mat-select formControlName="taskId" (selectionChange)="change($event)"
+                                required>
+                                <mat-option>-- None --</mat-option>
+                                <mat-option *ngFor="let task of tasks" [value]="task.id">{{task.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="jobDetailForm.get('taskId')?.hasError('required')">
+                                Seleccione una tarea.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex appearance="outline">
+                            <mat-label>Grupo</mat-label>
+                            <mat-select formControlName="groupId" required>
+                                <mat-option>-- None --</mat-option>
+                                <mat-option *ngFor="let group of groups" [value]="group.id">
+                                    {{group.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="jobDetailForm.get('groupId')?.hasError('required')">
+                                Seleccione un grupo.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                        <mat-form-field fxFlex appearance="outline">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput formControlName="name" required>
+                            <mat-error *ngIf="jobDetailForm.get('name')?.hasError('required')">
+                                Ingrese un nombre.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex appearance="outline">
+                            <mat-label>Cron Expression</mat-label>
+                            <input matInput placeholder="0 */12 * * *" formControlName="cronExpression" required>
+                            <mat-error *ngIf="jobDetailForm.get('cronExpression')?.hasError('cronInvalid')">
+                                Esta expresion no corresponde a una cronExpression valida.
+                            </mat-error>
+                            <mat-error *ngIf="jobDetailForm.get('cronExpression')?.hasError('required')">
+                                Ingrese una cron expression.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field fxFlex appearance="outline">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput placeholder="Esto es una descripción"
+                            formControlName="description"></textarea>
+                    </mat-form-field>
+
+                    <mat-slide-toggle fxFlex="25" formControlName="enableNotifications" (change)="toggle($event)">Habilitar las notificaciones via email</mat-slide-toggle>
+
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button routerLink="/tasks">Cancelar</button>
+                <button mat-button [disabled]="jobDetailForm.invalid" matStepperNext>Siguiente</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

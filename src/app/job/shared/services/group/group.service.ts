@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Group } from '../../interfaces/Group';
 
-const JOB_GROUPS_URL = 'http://localhost:9191/jobGroups';
+import { environment } from 'src/environments/environment';
+
+const JOB_GROUPS_URL = environment.apiUrl + '/groups';
 
 @Injectable({
   providedIn: 'root'
