@@ -18,11 +18,11 @@ export class JobShowComponent implements OnInit {
   jobDetailDto!: JobDetailDTO;
   customLoggingJobHistory!: CustomLoggingJobHistory;
   id: number;
+  dataSource = new MatTableDataSource<CustomLoggingJobHistory>();
 
   isLoadingResults: boolean = true;
   resultsLength: number = 0;
   displayedColumns: string[] = ['id', 'status', 'firedAt', 'completedAt', 'result'];
-  dataSource!: MatTableDataSource<CustomLoggingJobHistory>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -59,13 +59,9 @@ export class JobShowComponent implements OnInit {
           this.resultsLength = data.totalElements;
           return data.content;
         })
-      ).subscribe(data => this.loadTasks(data));
-  }
-
-  loadTasks(result: CustomLoggingJobHistory[]) {
-    this.dataSource = new MatTableDataSource(result)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      ).subscribe(data => {
+        this.dataSource.data = data;
+      });
   }
 
 }

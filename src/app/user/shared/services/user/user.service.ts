@@ -12,14 +12,14 @@ const USERS_URL = environment.apiUrl + '/users';
 })
 export class UserService {
 
-  constructor(private httpCliente: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   getUserProfileByUsername(username: string): Observable<UserProfile> {
-    return this.httpCliente.get<UserProfile>(`${USERS_URL}/${username}/profile`);
+    return this.httpClient.get<UserProfile>(`${USERS_URL}/${username}/profile`);
   }
 
   update(username: string, userProfile: UserProfile): Observable<UserProfile> {
-    return this.httpCliente.put<UserProfile>(`${USERS_URL}/${username}/profile`, userProfile);
+    return this.httpClient.put<UserProfile>(`${USERS_URL}/${username}/profile`, userProfile);
   }
 
 }

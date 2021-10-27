@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JobDetailService } from '../shared/services/jobDetail/job-detail.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +10,7 @@ import { ConfirmationDialogComponentComponent } from 'src/app/shared/components/
 import { catchError, debounceTime, filter, finalize, map, mergeMap, startWith, switchMap } from 'rxjs/operators';
 import { merge, of, Subject } from 'rxjs';
 import { JobAction } from '../shared/interfaces/JobAction';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-job-list',
@@ -20,7 +20,9 @@ import { JobAction } from '../shared/interfaces/JobAction';
 export class JobListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'group', 'cronExpression', 'previousFireTime', 'nextFireTime', 'state', 'actions'];
-  dataSource!: MatTableDataSource<JobDetailDTO>;
+
+  dataSource = new MatTableDataSource<JobDetailDTO>();
+
   updateTaskStateRequest$ = new Subject<JobAction>();
   refresh$ = new Subject<boolean>();
   disableButton: boolean = false;
@@ -35,7 +37,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
   constructor(private jobDetailService: JobDetailService, private snackBar: MatSnackBar, private dialog: MatDialog) {
     this.updateTaskStateRequest().subscribe(result => {
       this.showConfirmationMessage('Tarea actualizada con exito');
-      this.loadTasks(result.content);
+      this.dataSource.data = result.content;
     });
   }
 
@@ -64,15 +66,16 @@ export class JobListComponent implements OnInit, AfterViewInit {
           this.resultsLength = data.totalElements;
           return data.content;
         })
-      ).subscribe(data => this.loadTasks(data));
+      ).subscribe(data => this.dataSource.data = data);
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue?.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    this.dataSource.filter = filterValue?.trim().toLowerCase();
+    
+    if (this.paginator) {
+      this.paginator.firstPage();
     }
   }
 
@@ -86,7 +89,7 @@ export class JobListComponent implements OnInit, AfterViewInit {
         switchMap(result => this.getAllTasks())
       ).subscribe(result => {
         this.showConfirmationMessage('Tarea eliminada con exito');
-        this.loadTasks(result.content);
+        this.dataSource.data = result.content;
       });
   }
 
@@ -105,12 +108,6 @@ export class JobListComponent implements OnInit, AfterViewInit {
 
   private getAllTasks() {
     return this.jobDetailService.getAll().pipe(finalize(() => this.disableButton = false));
-  }
-
-  private loadTasks(result: JobDetailDTO[]): void {
-    this.dataSource = new MatTableDataSource(result)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   private showConfirmationMessage(message: string): void {

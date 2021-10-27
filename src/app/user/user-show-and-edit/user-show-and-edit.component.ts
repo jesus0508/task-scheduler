@@ -43,7 +43,7 @@ export class UserShowAndEditComponent implements OnInit {
   }
 
   fillForm(user: UserProfile) {
-    this.userForm.patchValue({ ...user })
+    this.userForm.patchValue({ ...user });
   }
 
   updateUserProfile() {

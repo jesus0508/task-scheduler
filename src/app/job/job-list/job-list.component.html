@@ -24,7 +24,7 @@
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div> -->
     <div class="table" class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDisableClear matSortDirection="desc">
 
             <!--- Note that these columns can be defined in any order.
                           The actual rendered columns are set as a property on the row definition" -->

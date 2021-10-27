@@ -1,0 +1,65 @@
+<app-breadcrumb title="Configuraciones Globales"></app-breadcrumb>
+<div class="container dasboard_body" fxLayout="column" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <form fxFlex.gt-sm="70" fxFlex.lt-md="100" class="text-center" [formGroup]="settingForm"
+            (ngSubmit)="updateSetting()">
+            <mat-card>
+                <mat-card-title>
+                    <p>Configuraciones Email</p>
+                </mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="column" fxLayoutGap="1rem">
+                        <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Correo emisor: </mat-label>
+                                <input matInput formControlName="sender" required>
+                                <mat-error *ngIf="settingForm.get('sender')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="settingForm.get('sender')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Asunto </mat-label>
+                                <input matInput formControlName="subject" required>
+                                <mat-error *ngIf="settingForm.get('subject')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="settingForm.get('subject')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="0px">
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Intervalo entre notificaciones </mat-label>
+                                <input type="number" matInput formControlName="diff" required>
+                                <span matSuffix>min.</span>
+                                <mat-error *ngIf="settingForm.get('diff')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex appearance="outline">
+                                <mat-label>Nombre del receptor </mat-label>
+                                <input matInput formControlName="recipientName" required>
+                                <mat-error *ngIf="settingForm.get('recipientName')?.hasError('required')">
+                                    Este campo no puede ser vacio.
+                                </mat-error>
+                                <mat-error *ngIf="settingForm.get('recipientName')?.hasError('maxLength')">
+                                    La longitud maxima es de 50 caracteres.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button routerLink="/tasks">Cancelar</button>
+                    <button mat-button type="submit" [disabled]="settingForm.invalid">Guardar</button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</div>

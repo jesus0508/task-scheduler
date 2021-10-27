@@ -8,11 +8,10 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent, canActivate: [CheckLoginGuard] },
-  //{ path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(d => d.DashboardModule), canLoad: [UserGuard], data: { roles: [Role.MANAGER, Role.ADMIN] } },
   { path: 'tasks', loadChildren: () => import('./job/job.module').then(t => t.JobModule), canLoad: [UserGuard], data: { roles: [Role.MANAGER, Role.ADMIN] } },
-  //{ path: 'users', loadChildren: () => import('./job/job.module').then(t => t.JobModule), canLoad: [UserGuard], data: { roles: [Role.ADMIN] } },
   { path: 'account', loadChildren: () => import('./user/user.module').then(t => t.UserModule), canLoad: [UserGuard], data: { roles: [Role.MANAGER, Role.ADMIN] } },
-  { path: '**', redirectTo: 'login' }
+  { path: 'settings', loadChildren: () => import('./setting/setting.module').then(t => t.SettingModule), canLoad: [UserGuard], data: { roles: [Role.MANAGER, Role.ADMIN] } },
+  { path: '**', redirectTo: 'tasks' }
 ];
 
 @NgModule({

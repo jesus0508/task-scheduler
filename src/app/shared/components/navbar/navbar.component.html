@@ -9,8 +9,12 @@
             </h1>
         </a>
         <span class="example-spacer"></span>
+        <a [routerLink]="['/settings']" mat-icon-button aria-label="Example icon-setting with share icon">
+            <mat-icon>settings</mat-icon>
+        </a>
         <button (click)="logout()" mat-icon-button aria-label="Example icon-logout with share icon">
-            <mat-icon>exit_to_app</mat-icon>
+            <mat-icon>logout</mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
+
